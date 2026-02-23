@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Message for Our Community</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #D94F3A;
+    --red-soft: #FDF0EE;
+    --red-mid: #F2C9C3;
+    --warm: #FAF6F1;
+    --sand: #F0E8DC;
+    --ink: #2A1F1A;
+    --body: #4A3B32;
+    --muted: #8A7A70;
+    --green: #3A7D5A;
+    --green-soft: #EBF5EF;
+    --gold: #C8890A;
+    --gold-soft: #FDF5E0;
+    --white: #FFFFFF;
+    --teal: #1E6B7A;
+    --teal-soft: #E5F3F5;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--warm);
+    color: var(--ink);
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    overflow-x: hidden;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* SVG icon helper */
+  .icon { display: inline-flex; align-items: center; justify-content: center; }
+  .icon svg { display: block; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(160deg, #7B1D13 0%, #C8332A 60%, #E05A40 100%);
+    color: white;
+    padding: 52px 28px 44px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0; right: 0;
+    height: 32px;
+    background: var(--warm);
+    clip-path: ellipse(60% 100% at 50% 100%);
+  }
+  .hero-icon {
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 18px;
+    width: 72px; height: 72px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    animation: pop 0.6s ease both 0.2s;
+  }
+  @keyframes pop {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  .hero h1 {
+    font-family: 'Lora', serif;
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.25;
+    margin-bottom: 14px;
+    animation: fadeUp 0.6s ease both 0.35s;
+  }
+  .hero-msg {
+    font-size: 15px;
+    font-weight: 400;
+    opacity: 0.9;
+    line-height: 1.65;
+    animation: fadeUp 0.6s ease both 0.5s;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  /* ── AUDIO ── */
+  .audio-wrap { margin: 20px 0 0; animation: fadeUp 0.6s ease both 0.65s; }
+  .audio-pill {
+    background: rgba(255,255,255,0.15);
+    border: 1.5px solid rgba(255,255,255,0.25);
+    border-radius: 50px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .play-btn {
+    width: 36px; height: 36px;
+    background: white;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    color: var(--red);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.15s;
+  }
+  .play-btn:active { transform: scale(0.9); }
+  .audio-label { font-size: 13px; font-weight: 700; }
+  .audio-sub { font-size: 11px; opacity: 0.65; }
+  .progress-bar { height: 3px; background: rgba(255,255,255,0.15); border-radius: 3px; margin-top: 6px; overflow: hidden; }
+  .progress-fill { height: 100%; background: white; width: 0%; transition: width 0.2s; border-radius: 50px; }
+  .script-toggle { background: none; border: none; color: rgba(255,255,255,0.6); font-size: 12px; font-family: 'Nunito', sans-serif; cursor: pointer; text-decoration: underline; margin-top: 8px; display: block; width: 100%; text-align: center; }
+  .script-box { background: rgba(0,0,0,0.2); border-radius: 10px; padding: 14px 16px; font-size: 13px; font-style: italic; line-height: 1.7; opacity: 0.85; margin-top: 8px; display: none; }
+  .script-box.open { display: block; }
+
+  /* ── SECTIONS & CARDS ── */
+  .section { padding: 32px 24px; }
+
+  .card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 22px 20px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .card.visible { opacity: 1; transform: none; }
+
+  .card-icon {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 14px;
+  }
+  .red-card .card-icon   { background: var(--red-mid); }
+  .white-card .card-icon { background: var(--sand); }
+  .green-card .card-icon { background: #c6e8d5; }
+  .gold-card .card-icon  { background: #f5e0a0; }
+  .teal-card .card-icon  { background: #b8dde4; }
+
+  .card-title { font-family: 'Lora', serif; font-size: 18px; font-weight: 600; margin-bottom: 8px; color: var(--ink); line-height: 1.3; }
+  .card-body  { font-size: 14.5px; color: var(--body); line-height: 1.7; }
+  .card-body strong { color: var(--ink); font-weight: 800; }
+  .card.red-card   { background: var(--red-soft); border: 1.5px solid var(--red-mid); }
+  .card.green-card { background: var(--green-soft); }
+  .card.gold-card  { background: var(--gold-soft); }
+  .card.teal-card  { background: var(--teal-soft); }
+
+  .section-head { text-align: center; margin-bottom: 20px; }
+  .section-head h2 { font-family: 'Lora', serif; font-size: 22px; font-weight: 600; color: var(--ink); line-height: 1.3; }
+  .section-head p  { font-size: 14px; color: var(--muted); margin-top: 6px; }
+
+  /* ── FACT BOXES ── */
+  .fact-row { display: flex; gap: 10px; margin-bottom: 10px; }
+  .fact-box {
+    flex: 1;
+    background: var(--white);
+    border-radius: 14px;
+    padding: 18px 14px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .fact-box.visible { opacity: 1; transform: none; }
+  .fact-box .big   { font-family: 'Lora', serif; font-size: 34px; font-weight: 600; line-height: 1; margin-bottom: 6px; }
+  .fact-box .label { font-size: 12px; color: var(--body); line-height: 1.4; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 5px; }
+  .fact-box.red .big   { color: var(--red); }
+  .fact-box.green .big { color: var(--green); }
+
+  /* ── COMPARE STRIP ── */
+  .compare-strip {
+    background: var(--white);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    opacity: 0;
+    transform: translateY(16px);
+    transition: all 0.5s ease;
+  }
+  .compare-strip.visible { opacity: 1; transform: none; }
+  .compare-row { display: flex; align-items: center; padding: 14px 18px; gap: 14px; border-bottom: 1px solid #f0ece6; }
+  .compare-row:last-child { border-bottom: none; }
+  .compare-icon { width: 36px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .compare-text { flex: 1; }
+  .compare-name { font-size: 13px; font-weight: 800; color: var(--ink); }
+  .compare-note { font-size: 11.5px; color: var(--muted); margin-top: 1px; }
+  .compare-bar-wrap { width: 80px; flex-shrink: 0; }
+  .compare-bar { height: 8px; border-radius: 4px; background: var(--red); width: 0%; transition: width 1s cubic-bezier(0.23,1,0.32,1); }
+  .compare-bar.low { background: #ccc; }
+  .compare-val { font-size: 11px; font-weight: 800; color: var(--red); text-align: right; margin-top: 3px; }
+  .compare-val.low { color: var(--muted); }
+
+  /* ── CHECKLIST ── */
+  .checklist-section { background: var(--sand); }
+  .check-card { background: var(--white); border-radius: 16px; padding: 22px 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .check-card h3 { font-family: 'Lora', serif; font-size: 18px; font-weight: 600; margin-bottom: 16px; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+  .check-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 0; border-bottom: 1px solid #f0ece6;
+    cursor: pointer; -webkit-tap-highlight-color: transparent; user-select: none;
+  }
+  .check-item:last-of-type { border-bottom: none; }
+  .check-box {
+    width: 26px; height: 26px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    margin-top: 1px;
+  }
+  .check-box.checked { background: var(--green); border-color: var(--green); }
+  .check-text { font-size: 14px; color: var(--body); line-height: 1.55; }
+  .check-result { margin-top: 16px; padding: 14px 16px; border-radius: 10px; font-size: 14px; font-weight: 700; line-height: 1.5; display: none; text-align: center; }
+  .check-result.show { display: block; }
+  .check-result.prompt { background: var(--red-soft); color: var(--red); border: 1.5px solid var(--red-mid); }
+  .check-result.ok { background: var(--green-soft); color: var(--green); }
+
+  /* ── STEPS ── */
+  .steps-section { background: var(--teal); color: white; }
+  .steps-section .section-head h2 { color: white; }
+  .steps-section .section-head p  { color: rgba(255,255,255,0.65); }
+  .step-card {
+    background: rgba(255,255,255,0.1);
+    border: 1.5px solid rgba(255,255,255,0.15);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 12px;
+    display: flex; gap: 16px; align-items: flex-start;
+    opacity: 0; transform: translateX(-16px);
+    transition: all 0.5s ease;
+  }
+  .step-card.visible { opacity: 1; transform: none; }
+  .step-num {
+    width: 38px; height: 38px;
+    background: white; color: var(--teal);
+    border-radius: 50%;
+    font-size: 18px; font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-title { font-size: 15px; font-weight: 800; margin-bottom: 4px; }
+  .step-body  { font-size: 13.5px; opacity: 0.85; line-height: 1.6; font-weight: 400; }
+  .tip-box { background: rgba(255,255,255,0.1); border-radius: 12px; padding: 16px 18px; margin-top: 4px; font-size: 13.5px; line-height: 1.65; opacity: 0.85; display: flex; gap: 10px; align-items: flex-start; }
+
+  /* ── CTA ── */
+  .cta-section { background: var(--red); color: white; text-align: center; padding: 40px 24px; }
+  .cta-section h2 { font-family: 'Lora', serif; font-size: 24px; font-weight: 600; margin-bottom: 10px; line-height: 1.3; display: flex; align-items: center; justify-content: center; gap: 10px; }
+  .cta-section p  { font-size: 14.5px; opacity: 0.9; margin-bottom: 24px; line-height: 1.65; }
+  .cta-btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    background: white; color: var(--red);
+    font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 16px;
+    padding: 16px 24px; border-radius: 50px; border: none;
+    cursor: pointer; text-decoration: none;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    transition: transform 0.1s;
+  }
+  .cta-btn:active { transform: scale(0.97); }
+  .cta-note { font-size: 12px; opacity: 0.6; margin-top: 14px; }
+
+  /* ── FOOTER ── */
+  footer { background: #1A1208; color: rgba(255,255,255,0.45); padding: 28px 24px; font-size: 11px; line-height: 1.8; }
+  footer strong { color: rgba(255,255,255,0.7); display: block; margin-bottom: 8px; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<!-- Inline SVG icon library — defined once, reused with <use> -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <!-- heart pulse -->
+  <symbol id="ico-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2.1C10.5 3.5 9.26 3 7.5 3A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+  </symbol>
+  <!-- warning triangle -->
+  <symbol id="ico-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+    <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+  </symbol>
+  <!-- globe -->
+  <symbol id="ico-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="10"/>
+    <line x1="2" y1="12" x2="22" y2="12"/>
+    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+  </symbol>
+  <!-- clock -->
+  <symbol id="ico-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="10"/>
+    <polyline points="12 6 12 12 16 14"/>
+  </symbol>
+  <!-- shield check -->
+  <symbol id="ico-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+    <polyline points="9 12 11 14 15 10"/>
+  </symbol>
+  <!-- bacteria / bug -->
+  <symbol id="ico-bug" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="13" r="4"/>
+    <path d="M12 3v4M4.22 6.22l2.83 2.83M2 14h4M4.22 19.78l2.83-2.83M12 21v-4M19.78 19.78l-2.83-2.83M22 14h-4M19.78 6.22l-2.83 2.83"/>
+  </symbol>
+  <!-- flask / vial -->
+  <symbol id="ico-flask" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 3h6l1 9H8L9 3z"/>
+    <path d="M6.5 12.5A7 7 0 0 0 17.5 12.5"/>
+    <path d="M9 3H6a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1h-3"/>
+    <line x1="12" y1="12" x2="12" y2="21"/>
+    <path d="M8 21h8"/>
+  </symbol>
+  <!-- frown face -->
+  <symbol id="ico-frown" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="10"/>
+    <path d="M16 16s-1.5-2-4-2-4 2-4 2"/>
+    <line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>
+  </symbol>
+  <!-- smile face -->
+  <symbol id="ico-smile" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="10"/>
+    <path d="M8 13s1.5 3 4 3 4-3 4-3"/>
+    <line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>
+  </symbol>
+  <!-- pencil / edit -->
+  <symbol id="ico-pencil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+  </symbol>
+  <!-- message / chat -->
+  <symbol id="ico-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+    <line x1="9" y1="10" x2="9.01" y2="10"/><line x1="12" y1="10" x2="12.01" y2="10"/><line x1="15" y1="10" x2="15.01" y2="10"/>
+  </symbol>
+  <!-- share -->
+  <symbol id="ico-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+  </symbol>
+  <!-- calendar check -->
+  <symbol id="ico-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+    <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+    <line x1="3" y1="10" x2="21" y2="10"/>
+    <polyline points="9 16 11 18 15 14"/>
+  </symbol>
+  <!-- users group -->
+  <symbol id="ico-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+    <circle cx="9" cy="7" r="4"/>
+    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+  </symbol>
+  <!-- single person -->
+  <symbol id="ico-person" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+    <circle cx="12" cy="7" r="4"/>
+  </symbol>
+  <!-- play -->
+  <symbol id="ico-play" viewBox="0 0 24 24" fill="currentColor">
+    <polygon points="5 3 19 12 5 21 5 3"/>
+  </symbol>
+  <!-- pause -->
+  <symbol id="ico-pause" viewBox="0 0 24 24" fill="currentColor">
+    <rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>
+  </symbol>
+  <!-- checkmark for checkbox -->
+  <symbol id="ico-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="20 6 9 17 4 12"/>
+  </symbol>
+</svg>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-icon">
+    <svg class="icon" width="36" height="36" style="color:white"><use href="#ico-heart"/></svg>
+  </div>
+  <h1>This is for you<br>and your family.</h1>
+  <p class="hero-msg">If your family is from Korea, Japan, Vietnam, or China — there's something important you should know about your stomach health. It's not scary. It's actually really simple to act on.</p>
+
+  <div class="audio-wrap">
+    <div class="audio-pill">
+      <button class="play-btn" id="playBtn" onclick="togglePlay()">
+        <svg id="playIcon" width="14" height="14" style="color:var(--red)"><use href="#ico-play"/></svg>
+      </button>
+      <div style="flex:1">
+        <div class="audio-label">Listen — 45 seconds</div>
+        <div class="audio-sub">A quick message for your family</div>
+      </div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+    <button class="script-toggle" onclick="toggleScript()">Read it instead ↓</button>
+    <div class="script-box" id="scriptBox">
+      "If your family is from Korea, Japan, Vietnam, or China — please share this with them. Stomach cancer is much more common in our communities, especially for people who were born abroad. The good news? There's a simple bacteria called H. pylori that causes most of these cancers — and it can be tested and treated before anything bad happens. One doctor's appointment. One easy test. That's it. Scroll down to find out if you should get checked."
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 1: BIG PICTURE -->
+<div class="section">
+  <div class="section-head">
+    <h2>Our communities are at higher risk.</h2>
+    <p>And most people don't know it.</p>
+  </div>
+
+  <div class="card red-card">
+    <div class="card-icon">
+      <svg width="26" height="26" style="color:var(--red)"><use href="#ico-warn"/></svg>
+    </div>
+    <div class="card-title">Stomach cancer is much more common in Asian Americans</div>
+    <div class="card-body">Asian American men get stomach cancer at more than <strong>twice the rate</strong> of white men. In Korean American communities, it can be up to <strong>13 times more common</strong>. Most families have no idea.</div>
+  </div>
+
+  <div class="card white-card">
+    <div class="card-icon">
+      <svg width="26" height="26" style="color:var(--ink)"><use href="#ico-globe"/></svg>
+    </div>
+    <div class="card-title">It's especially common if you were born abroad</div>
+    <div class="card-body">People who immigrated from Korea, Japan, China, or Vietnam get stomach cancer <strong>2 to 3 times more often</strong> than Asian Americans born here. If your parents were born abroad, this applies to your family too.</div>
+  </div>
+
+  <div class="card red-card">
+    <div class="card-icon">
+      <svg width="26" height="26" style="color:var(--red)"><use href="#ico-clock"/></svg>
+    </div>
+    <div class="card-title">Most cases are caught too late</div>
+    <div class="card-body">Over <strong>1 in 3</strong> stomach cancers are only found after they've already spread. At that point, survival drops to under 8%. But when it's caught early — <strong>most people survive.</strong> That's the whole point of this page.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: COMPARISON -->
+<div class="section" style="background:var(--sand);padding-top:8px;padding-bottom:32px;">
+  <div class="section-head">
+    <h2>How different is the risk, really?</h2>
+    <p>Here's a simple way to see it.</p>
+  </div>
+
+  <div class="compare-strip">
+    <div class="compare-row">
+      <div class="compare-icon"><svg width="22" height="22" style="color:var(--red)"><use href="#ico-users"/></svg></div>
+      <div class="compare-text">
+        <div class="compare-name">Korean American men</div>
+        <div class="compare-note">Born abroad, age 50+</div>
+      </div>
+      <div class="compare-bar-wrap">
+        <div class="compare-bar" data-w="100"></div>
+        <div class="compare-val">Highest risk</div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-icon"><svg width="22" height="22" style="color:#c0392b;opacity:0.8"><use href="#ico-users"/></svg></div>
+      <div class="compare-text">
+        <div class="compare-name">Japanese American men</div>
+        <div class="compare-note">Born abroad</div>
+      </div>
+      <div class="compare-bar-wrap">
+        <div class="compare-bar" data-w="70"></div>
+        <div class="compare-val">Very high</div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-icon"><svg width="22" height="22" style="color:#c0392b;opacity:0.6"><use href="#ico-users"/></svg></div>
+      <div class="compare-text">
+        <div class="compare-name">Chinese & Vietnamese Am.</div>
+        <div class="compare-note">First-generation</div>
+      </div>
+      <div class="compare-bar-wrap">
+        <div class="compare-bar" data-w="48"></div>
+        <div class="compare-val">High</div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-icon"><svg width="22" height="22" style="color:#bbb"><use href="#ico-person"/></svg></div>
+      <div class="compare-text">
+        <div class="compare-name">White Americans</div>
+        <div class="compare-note">General population</div>
+      </div>
+      <div class="compare-bar-wrap">
+        <div class="compare-bar low" data-w="11"></div>
+        <div class="compare-val low">Much lower</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card gold-card" style="text-align:center;">
+    <div class="card-icon" style="margin:0 auto 14px;">
+      <svg width="26" height="26" style="color:var(--gold)"><use href="#ico-shield"/></svg>
+    </div>
+    <div class="card-title">This doesn't mean you will get it.</div>
+    <div class="card-body">Higher risk just means it's worth paying attention to — and there's an easy thing you can do right now.</div>
+  </div>
+</div>
+
+<!-- SECTION 3: H. PYLORI -->
+<div class="section">
+  <div class="section-head">
+    <h2>There's a bacteria behind most of this.</h2>
+    <p>And the good news — it's treatable.</p>
+  </div>
+
+  <div class="card teal-card">
+    <div class="card-icon">
+      <svg width="26" height="26" style="color:var(--teal)"><use href="#ico-bug"/></svg>
+    </div>
+    <div class="card-title">Meet H. pylori</div>
+    <div class="card-body">
+      <em>Helicobacter pylori</em> is a stomach bacteria that billions of people carry without knowing. <strong>No symptoms. No warning signs.</strong> But over many years, it can slowly damage your stomach and lead to cancer.<br><br>
+      It's more common in people from countries with older water systems — which is why many first-generation immigrants carry it without knowing.
+    </div>
+  </div>
+
+  <div class="card green-card">
+    <div class="card-icon">
+      <svg width="26" height="26" style="color:var(--green)"><use href="#ico-flask"/></svg>
+    </div>
+    <div class="card-title">Testing and treating it is easy</div>
+    <div class="card-body">
+      A simple <strong>breath test, blood test, or stool test</strong> can tell you if you have it. If you do, a short course of antibiotics clears it up — and <strong>lowers your cancer risk</strong> before anything serious happens.
+    </div>
+  </div>
+
+  <div class="fact-row">
+    <div class="fact-box red">
+      <div class="big">7.5%</div>
+      <div class="label">
+        <svg width="14" height="14" style="color:var(--red);flex-shrink:0"><use href="#ico-frown"/></svg>
+        Survival when caught late
+      </div>
+    </div>
+    <div class="fact-box green" style="transition-delay:0.1s">
+      <div class="big">76%</div>
+      <div class="label">
+        <svg width="14" height="14" style="color:var(--green);flex-shrink:0"><use href="#ico-smile"/></svg>
+        Survival when caught early
+      </div>
+    </div>
+  </div>
+  <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:4px;">Source: NCI SEER, 2018–2022</p>
+</div>
+
+<!-- SECTION 4: CHECKLIST -->
+<div class="section checklist-section">
+  <div class="section-head">
+    <h2>Does this apply to you?</h2>
+    <p>Tap the ones that are true for you.</p>
+  </div>
+  <div class="check-card">
+    <h3>
+      Quick check
+      <svg width="18" height="18" style="color:var(--red)"><use href="#ico-pencil"/></svg>
+    </h3>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box" data-checked="false"></div>
+      <div class="check-text">I was born in Korea, Japan, Vietnam, China, or another Asian country</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box" data-checked="false"></div>
+      <div class="check-text">My mom, dad, or grandparent was born in one of these countries</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box" data-checked="false"></div>
+      <div class="check-text">I am 30 years old or older</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box" data-checked="false"></div>
+      <div class="check-text">Someone in my family has had stomach cancer</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box" data-checked="false"></div>
+      <div class="check-text">I've never been tested for H. pylori before</div>
+    </div>
+    <div class="check-result" id="checkResult"></div>
+  </div>
+</div>
+
+<!-- SECTION 5: STEPS -->
+<div class="section steps-section">
+  <div class="section-head">
+    <h2>What to do next</h2>
+    <p>Three simple steps. That's all.</p>
+  </div>
+  <div class="step-card">
+    <div class="step-num">1</div>
+    <div>
+      <div class="step-title">Talk to your doctor</div>
+      <div class="step-body">Just say: <em>"I'd like to be tested for H. pylori."</em> That's it. They'll know what to do. If English isn't your first language, you can ask for an interpreter — it's your right.</div>
+    </div>
+  </div>
+  <div class="step-card" style="transition-delay:0.1s">
+    <div class="step-num">2</div>
+    <div>
+      <div class="step-title">Get the test — it's simple</div>
+      <div class="step-body">It's a breath test, a blood draw, or a stool test. No scope, no procedure. You'll have results within a few days.</div>
+    </div>
+  </div>
+  <div class="step-card" style="transition-delay:0.2s">
+    <div class="step-num">3</div>
+    <div>
+      <div class="step-title">If positive — treat it and move on</div>
+      <div class="step-body">A 2-week course of antibiotics clears H. pylori for most people. That's it. You've just lowered your cancer risk significantly.</div>
+    </div>
+  </div>
+  <div class="tip-box">
+    <svg width="20" height="20" style="color:white;flex-shrink:0;margin-top:1px"><use href="#ico-chat"/></svg>
+    <div><strong>No doctor right now?</strong> Community health centers offer care on a sliding-scale fee, regardless of insurance. Many have staff who speak Korean, Cantonese, Mandarin, and Vietnamese.</div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>
+    Share this with your family.
+    <svg width="22" height="22" style="color:white"><use href="#ico-share"/></svg>
+  </h2>
+  <p>The best thing you can do right now is send this to someone you care about — a parent, an aunt or uncle, an older sibling. One text could matter a lot.</p>
+  <a href="#" class="cta-btn" onclick="return false;">
+    <svg width="18" height="18" style="color:var(--red)"><use href="#ico-calendar"/></svg>
+    Schedule a Visit This Month
+  </a>
+  <div class="cta-note">Ask your doctor about H. pylori testing at your next visit.</div>
+</div>
+
+<footer>
+  <strong>Sources</strong>
+  Lee et al. (2024). Stomach cancer disparities by nativity. <em>Cancer, 130(7)</em>. · McMahon et al. (2024). H. pylori seroprevalence by race/ethnicity. <em>Lancet Regional Health – Americas, 41</em>. · NCI SEER (2018–2022). · Shah et al. (2020). Gastric cancer incidence by race, age 50+. <em>Gastroenterology, 159(5)</em>.<br><br>
+  <span style="opacity:0.5;">PHE 316 · Owen Robles · Educational project only — not medical advice.</span>
+</footer>
+
+<script>
+  // Scroll animations
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('visible');
+      e.target.querySelectorAll('.compare-bar[data-w]').forEach(bar => {
+        setTimeout(() => { bar.style.width = bar.dataset.w + '%'; }, 150);
+      });
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.card, .fact-box, .compare-strip, .step-card').forEach(el => io.observe(el));
+
+  // Checklist
+  function toggleCheck(el) {
+    const box = el.querySelector('.check-box');
+    const isChecked = box.dataset.checked === 'true';
+    box.dataset.checked = !isChecked;
+    if (!isChecked) {
+      box.classList.add('checked');
+      box.innerHTML = '<svg width="14" height="14" style="color:white"><use href="#ico-check"/></svg>';
+    } else {
+      box.classList.remove('checked');
+      box.innerHTML = '';
+    }
+    const checked = document.querySelectorAll('.check-box.checked').length;
+    const r = document.getElementById('checkResult');
+    if (checked === 0) { r.className = 'check-result'; return; }
+    r.className = 'check-result show ' + (checked >= 2 ? 'prompt' : 'ok');
+    r.textContent = checked >= 2
+      ? `You checked ${checked} things — it's a good idea to bring this up with your doctor and ask about H. pylori testing.`
+      : `You checked 1 thing. Keep an eye on your health and mention it at your next checkup.`;
+  }
+
+  // Audio player (simulated)
+  let playing = false, prog = 0, timer = null;
+  const playIcon = document.getElementById('playIcon');
+  function togglePlay() {
+    const fill = document.getElementById('progress');
+    if (playing) {
+      clearInterval(timer);
+      playIcon.innerHTML = '<use href="#ico-play"/>';
+      playing = false;
+    } else {
+      playing = true;
+      playIcon.innerHTML = '<use href="#ico-pause"/>';
+      timer = setInterval(() => {
+        prog += 100 / 450;
+        fill.style.width = Math.min(prog, 100) + '%';
+        if (prog >= 100) {
+          clearInterval(timer);
+          playIcon.innerHTML = '<use href="#ico-play"/>';
+          playing = false; prog = 0;
+          setTimeout(() => fill.style.width = '0', 800);
+        }
+      }, 100);
+    }
+  }
+
+  // Script toggle
+  function toggleScript() {
+    const box = document.getElementById('scriptBox');
+    box.classList.toggle('open');
+    event.target.textContent = box.classList.contains('open') ? 'Hide ↑' : 'Read it instead ↓';
+  }
+</script>
+</body>
+</html>
