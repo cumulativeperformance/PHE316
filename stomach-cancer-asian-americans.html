@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Message for Our Community</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #D94F3A;
+    --red-soft: #FDF0EE;
+    --red-mid: #F2C9C3;
+    --warm: #FAF6F1;
+    --sand: #F0E8DC;
+    --ink: #2A1F1A;
+    --body: #4A3B32;
+    --muted: #8A7A70;
+    --green: #3A7D5A;
+    --green-soft: #EBF5EF;
+    --gold: #C8890A;
+    --gold-soft: #FDF5E0;
+    --white: #FFFFFF;
+    --teal: #1E6B7A;
+    --teal-soft: #E5F3F5;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--warm);
+    color: var(--ink);
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    overflow-x: hidden;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .hero {
+    background: linear-gradient(160deg, #7B1D13 0%, #C8332A 60%, #E05A40 100%);
+    color: white;
+    padding: 52px 28px 44px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0; right: 0;
+    height: 32px;
+    background: var(--warm);
+    clip-path: ellipse(60% 100% at 50% 100%);
+  }
+  .hero-emoji { font-size: 52px; margin-bottom: 16px; display: block; animation: pop 0.6s ease both 0.2s; }
+  @keyframes pop {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  .hero h1 {
+    font-family: 'Lora', serif;
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.25;
+    margin-bottom: 14px;
+    animation: fadeUp 0.6s ease both 0.35s;
+  }
+  .hero-msg {
+    font-size: 15px;
+    font-weight: 400;
+    opacity: 0.9;
+    line-height: 1.65;
+    animation: fadeUp 0.6s ease both 0.5s;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .audio-wrap { margin: 20px 0 0; animation: fadeUp 0.6s ease both 0.65s; }
+  .audio-pill {
+    background: rgba(255,255,255,0.15);
+    border: 1.5px solid rgba(255,255,255,0.25);
+    border-radius: 50px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .play-btn {
+    width: 34px; height: 34px;
+    background: white;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    color: var(--red);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.15s;
+  }
+  .play-btn:active { transform: scale(0.9); }
+  .audio-label { font-size: 13px; font-weight: 700; }
+  .audio-sub { font-size: 11px; opacity: 0.65; }
+  .progress-bar { height: 3px; background: rgba(255,255,255,0.15); border-radius: 3px; margin-top: 6px; overflow: hidden; }
+  .progress-fill { height: 100%; background: white; width: 0%; transition: width 0.2s; border-radius: 50px; }
+  .script-toggle { background: none; border: none; color: rgba(255,255,255,0.6); font-size: 12px; font-family: 'Nunito', sans-serif; cursor: pointer; text-decoration: underline; margin-top: 8px; display: block; width: 100%; text-align: center; }
+  .script-box {
+    background: rgba(0,0,0,0.2);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 13px;
+    font-style: italic;
+    line-height: 1.7;
+    opacity: 0.85;
+    margin-top: 8px;
+    display: none;
+  }
+  .script-box.open { display: block; }
+
+  .section { padding: 32px 24px; }
+
+  .card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 22px 20px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .card.visible { opacity: 1; transform: none; }
+  .card-emoji { font-size: 32px; margin-bottom: 10px; display: block; }
+  .card-title {
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .card-body { font-size: 14.5px; color: var(--body); line-height: 1.7; }
+  .card-body strong { color: var(--ink); font-weight: 800; }
+  .card.red-card { background: var(--red-soft); border: 1.5px solid var(--red-mid); }
+  .card.green-card { background: var(--green-soft); }
+  .card.gold-card { background: var(--gold-soft); }
+  .card.teal-card { background: var(--teal-soft); }
+
+  .section-head { text-align: center; margin-bottom: 20px; }
+  .section-head h2 {
+    font-family: 'Lora', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .section-head p { font-size: 14px; color: var(--muted); margin-top: 6px; }
+
+  .fact-row { display: flex; gap: 10px; margin-bottom: 10px; }
+  .fact-box {
+    flex: 1;
+    background: var(--white);
+    border-radius: 14px;
+    padding: 18px 14px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .fact-box.visible { opacity: 1; transform: none; }
+  .fact-box .big { font-family: 'Lora', serif; font-size: 34px; font-weight: 600; line-height: 1; margin-bottom: 6px; }
+  .fact-box .label { font-size: 12px; color: var(--body); line-height: 1.4; font-weight: 600; }
+  .fact-box.red .big { color: var(--red); }
+  .fact-box.green .big { color: var(--green); }
+
+  .compare-strip {
+    background: var(--white);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    opacity: 0;
+    transform: translateY(16px);
+    transition: all 0.5s ease;
+  }
+  .compare-strip.visible { opacity: 1; transform: none; }
+  .compare-row { display: flex; align-items: center; padding: 14px 18px; gap: 14px; border-bottom: 1px solid #f0ece6; }
+  .compare-row:last-child { border-bottom: none; }
+  .compare-icon { font-size: 22px; flex-shrink: 0; width: 34px; text-align: center; }
+  .compare-text { flex: 1; }
+  .compare-name { font-size: 13px; font-weight: 800; color: var(--ink); }
+  .compare-note { font-size: 11.5px; color: var(--muted); margin-top: 1px; }
+  .compare-bar-wrap { width: 80px; flex-shrink: 0; }
+  .compare-bar { height: 8px; border-radius: 4px; background: var(--red); width: 0%; transition: width 1s cubic-bezier(0.23,1,0.32,1); }
+  .compare-bar.low { background: #ccc; }
+  .compare-val { font-size: 11px; font-weight: 800; color: var(--red); text-align: right; margin-top: 3px; }
+  .compare-val.low { color: var(--muted); }
+
+  .checklist-section { background: var(--sand); }
+  .check-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 22px 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .check-card h3 {
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--ink);
+  }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0ece6;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+  .check-item:last-of-type { border-bottom: none; }
+  .check-box {
+    width: 26px; height: 26px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    margin-top: 1px;
+    font-size: 14px;
+    color: white;
+  }
+  .check-box.checked { background: var(--green); border-color: var(--green); }
+  .check-text { font-size: 14px; color: var(--body); line-height: 1.55; }
+  .check-result {
+    margin-top: 16px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.5;
+    display: none;
+    text-align: center;
+  }
+  .check-result.show { display: block; }
+  .check-result.prompt { background: var(--red-soft); color: var(--red); border: 1.5px solid var(--red-mid); }
+  .check-result.ok { background: var(--green-soft); color: var(--green); }
+
+  .steps-section { background: var(--teal); color: white; }
+  .steps-section .section-head h2 { color: white; }
+  .steps-section .section-head p { color: rgba(255,255,255,0.65); }
+  .step-card {
+    background: rgba(255,255,255,0.1);
+    border: 1.5px solid rgba(255,255,255,0.15);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    opacity: 0;
+    transform: translateX(-16px);
+    transition: all 0.5s ease;
+  }
+  .step-card.visible { opacity: 1; transform: none; }
+  .step-num {
+    width: 38px; height: 38px;
+    background: white;
+    color: var(--teal);
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-title { font-size: 15px; font-weight: 800; margin-bottom: 4px; }
+  .step-body { font-size: 13.5px; opacity: 0.85; line-height: 1.6; font-weight: 400; }
+
+  .cta-section { background: var(--red); color: white; text-align: center; padding: 40px 24px; }
+  .cta-section h2 { font-family: 'Lora', serif; font-size: 24px; font-weight: 600; margin-bottom: 10px; line-height: 1.3; }
+  .cta-section p { font-size: 14.5px; opacity: 0.9; margin-bottom: 24px; line-height: 1.65; }
+  .cta-btn {
+    display: block;
+    background: white;
+    color: var(--red);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 16px;
+    padding: 16px 24px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    transition: transform 0.1s;
+  }
+  .cta-btn:active { transform: scale(0.97); }
+  .cta-note { font-size: 12px; opacity: 0.6; margin-top: 14px; }
+
+  footer {
+    background: #1A1208;
+    color: rgba(255,255,255,0.45);
+    padding: 28px 24px;
+    font-size: 11px;
+    line-height: 1.8;
+  }
+  footer strong { color: rgba(255,255,255,0.7); display: block; margin-bottom: 8px; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="hero-emoji">🫶</span>
+  <h1>This is for you<br>and your family.</h1>
+  <p class="hero-msg">If your family is from Korea, Japan, Vietnam, or China — there's something important you should know about your stomach health. It's not scary. It's actually really simple to act on.</p>
+  <div class="audio-wrap">
+    <div class="audio-pill">
+      <button class="play-btn" id="playBtn" onclick="togglePlay()">▶</button>
+      <div style="flex:1">
+        <div class="audio-label">Listen — 45 seconds</div>
+        <div class="audio-sub">A quick message for your family</div>
+      </div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+    <button class="script-toggle" onclick="toggleScript()">Read it instead ↓</button>
+    <div class="script-box" id="scriptBox">
+      "If your family is from Korea, Japan, Vietnam, or China — please share this with them. Stomach cancer is much more common in our communities, especially for people who were born abroad. The good news? There's a simple bacteria called H. pylori that causes most of these cancers — and it can be tested and treated before anything bad happens. One doctor's appointment. One easy test. That's it. Scroll down to find out if you should get checked."
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-head">
+    <h2>Our communities are at higher risk.</h2>
+    <p>And most people don't know it.</p>
+  </div>
+
+  <div class="card red-card">
+    <span class="card-emoji">😟</span>
+    <div class="card-title">Stomach cancer is much more common in Asian Americans</div>
+    <div class="card-body">Asian American men get stomach cancer at more than <strong>twice the rate</strong> of white men. In Korean American communities, it can be up to <strong>13 times more common</strong>. Most families have no idea.</div>
+  </div>
+
+  <div class="card">
+    <span class="card-emoji">✈️</span>
+    <div class="card-title">It's especially common if you were born abroad</div>
+    <div class="card-body">People who immigrated from Korea, Japan, China, or Vietnam get stomach cancer <strong>2 to 3 times more often</strong> than Asian Americans born here. If your parents were born abroad, this applies to your family too.</div>
+  </div>
+
+  <div class="card red-card">
+    <span class="card-emoji">⏰</span>
+    <div class="card-title">Most cases are caught too late</div>
+    <div class="card-body">Over <strong>1 in 3</strong> stomach cancers are only found after they've already spread. At that point, survival drops to under 8%. But when it's caught early — <strong>most people survive.</strong> That's the whole point of this page.</div>
+  </div>
+</div>
+
+<div class="section" style="background:var(--sand);padding-top:8px;padding-bottom:32px;">
+  <div class="section-head">
+    <h2>How different is the risk, really?</h2>
+    <p>Here's a simple way to see it.</p>
+  </div>
+
+  <div class="compare-strip">
+    <div class="compare-row">
+      <div class="compare-icon">🇰🇷</div>
+      <div class="compare-text">
+        <div class="compare-name">Korean American men</div>
+        <div class="compare-note">Born abroad, age 50+</div>
+      </div>
+      <div class="compare-bar-wrap">
+        <div class="compare-bar" data-w="100"></div>
+        <div class="compare-val">Highest risk</div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-icon">🇯🇵</div>
+      <div class="compare-text">
+        <div class="compare-name">Japanese American men</div>
+        <div class="compare-note">Born abroad</div>
+      </div>
+      <div class="compare-bar-wrap">
+        <div class="compare-bar" data-w="70"></div>
+        <div class="compare-val">Very high</div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-icon">🇨🇳🇻🇳</div>
+      <div class="compare-text">
+        <div class="compare-name">Chinese & Vietnamese Am.</div>
+        <div class="compare-note">First-generation</div>
+      </div>
+      <div class="compare-bar-wrap">
+        <div class="compare-bar" data-w="48"></div>
+        <div class="compare-val">High</div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-icon">🧑‍🦳</div>
+      <div class="compare-text">
+        <div class="compare-name">White Americans</div>
+        <div class="compare-note">General population</div>
+      </div>
+      <div class="compare-bar-wrap">
+        <div class="compare-bar low" data-w="11"></div>
+        <div class="compare-val low">Much lower</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card gold-card" style="text-align:center;">
+    <span style="font-size:36px;">💛</span>
+    <div class="card-title" style="margin-top:8px;">This doesn't mean you will get it.</div>
+    <div class="card-body">Higher risk just means it's worth paying attention to — and there's an easy thing you can do right now.</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-head">
+    <h2>There's a bacteria behind most of this.</h2>
+    <p>And the good news — it's treatable.</p>
+  </div>
+
+  <div class="card teal-card">
+    <span class="card-emoji">🦠</span>
+    <div class="card-title">Meet H. pylori</div>
+    <div class="card-body">
+      <em>Helicobacter pylori</em> is a stomach bacteria that billions of people carry without knowing. <strong>No symptoms. No warning signs.</strong> But over many years, it can slowly damage your stomach and lead to cancer.<br><br>
+      It's more common in people from countries with older water systems — which is why many first-generation immigrants carry it without knowing.
+    </div>
+  </div>
+
+  <div class="card green-card">
+    <span class="card-emoji">✅</span>
+    <div class="card-title">Testing and treating it is easy</div>
+    <div class="card-body">
+      A simple <strong>breath test, blood test, or stool test</strong> can tell you if you have it. If you do, a short course of antibiotics clears it up — and <strong>lowers your cancer risk</strong> before anything serious happens.
+    </div>
+  </div>
+
+  <div class="fact-row">
+    <div class="fact-box red">
+      <div class="big">7.5%</div>
+      <div class="label">Survival when caught late 😞</div>
+    </div>
+    <div class="fact-box green" style="transition-delay:0.1s">
+      <div class="big">76%</div>
+      <div class="label">Survival when caught early 🎉</div>
+    </div>
+  </div>
+  <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:4px;">Source: NCI SEER, 2018–2022</p>
+</div>
+
+<div class="section checklist-section">
+  <div class="section-head">
+    <h2>Does this apply to you?</h2>
+    <p>Tap the ones that are true for you.</p>
+  </div>
+  <div class="check-card">
+    <h3>Quick check ✏️</h3>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text">I was born in Korea, Japan, Vietnam, China, or another Asian country</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text">My mom, dad, or grandparent was born in one of these countries</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text">I am 30 years old or older</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text">Someone in my family has had stomach cancer</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text">I've never been tested for H. pylori before</div>
+    </div>
+    <div class="check-result" id="checkResult"></div>
+  </div>
+</div>
+
+<div class="section steps-section">
+  <div class="section-head">
+    <h2>What to do next</h2>
+    <p>Three simple steps. That's all.</p>
+  </div>
+  <div class="step-card">
+    <div class="step-num">1</div>
+    <div>
+      <div class="step-title">Talk to your doctor</div>
+      <div class="step-body">Just say: <em>"I'd like to be tested for H. pylori."</em> That's it. They'll know what to do. If English isn't your first language, you can ask for an interpreter — it's your right.</div>
+    </div>
+  </div>
+  <div class="step-card" style="transition-delay:0.1s">
+    <div class="step-num">2</div>
+    <div>
+      <div class="step-title">Get the test — it's simple</div>
+      <div class="step-body">It's a breath test, a blood draw, or a stool test. No scope, no procedure. You'll have results within a few days.</div>
+    </div>
+  </div>
+  <div class="step-card" style="transition-delay:0.2s">
+    <div class="step-num">3</div>
+    <div>
+      <div class="step-title">If positive — treat it and move on</div>
+      <div class="step-body">A 2-week course of antibiotics clears H. pylori for most people. That's it. You've just lowered your cancer risk significantly.</div>
+    </div>
+  </div>
+  <div style="background:rgba(255,255,255,0.1);border-radius:12px;padding:16px 18px;margin-top:4px;font-size:13.5px;line-height:1.65;opacity:0.85;">
+    💬 <strong>No doctor right now?</strong> Community health centers offer care on a sliding-scale fee, regardless of insurance. Many have staff who speak Korean, Cantonese, Mandarin, and Vietnamese.
+  </div>
+</div>
+
+<div class="cta-section">
+  <h2>Share this with your family. 💌</h2>
+  <p>The best thing you can do right now is send this to someone you care about — a parent, an aunt or uncle, an older sibling. One text could matter a lot.</p>
+  <a href="#" class="cta-btn" onclick="return false;">📅 Schedule a Visit This Month</a>
+  <div class="cta-note">Ask your doctor about H. pylori testing at your next visit.</div>
+</div>
+
+<footer>
+  <strong>Sources</strong>
+  Lee et al. (2024). Stomach cancer disparities by nativity. <em>Cancer, 130(7)</em>. · McMahon et al. (2024). H. pylori seroprevalence by race/ethnicity. <em>Lancet Regional Health – Americas, 41</em>. · NCI SEER (2018–2022). · Shah et al. (2020). Gastric cancer incidence by race, age 50+. <em>Gastroenterology, 159(5)</em>.<br><br>
+  <span style="opacity:0.5;">PHE 316 · Owen Robles · Educational project only — not medical advice.</span>
+</footer>
+
+<script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('visible');
+      e.target.querySelectorAll('.compare-bar[data-w]').forEach(bar => {
+        setTimeout(() => { bar.style.width = bar.dataset.w + '%'; }, 150);
+      });
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.card, .fact-box, .compare-strip, .step-card').forEach(el => io.observe(el));
+
+  function toggleCheck(el) {
+    const box = el.querySelector('.check-box');
+    box.classList.toggle('checked');
+    box.textContent = box.classList.contains('checked') ? '✓' : '';
+    const checked = document.querySelectorAll('.check-box.checked').length;
+    const r = document.getElementById('checkResult');
+    if (checked === 0) { r.className = 'check-result'; return; }
+    r.className = 'check-result show ' + (checked >= 2 ? 'prompt' : 'ok');
+    r.textContent = checked >= 2
+      ? `You checked ${checked} things — it's a good idea to bring this up with your doctor and ask about H. pylori testing.`
+      : `You checked 1 thing. Keep an eye on your health and mention it at your next checkup.`;
+  }
+
+  let playing = false, prog = 0, timer = null;
+  function togglePlay() {
+    const btn = document.getElementById('playBtn');
+    const fill = document.getElementById('progress');
+    if (playing) {
+      clearInterval(timer); btn.textContent = '▶'; playing = false;
+    } else {
+      playing = true; btn.textContent = '⏸';
+      timer = setInterval(() => {
+        prog += 100 / 450;
+        fill.style.width = Math.min(prog, 100) + '%';
+        if (prog >= 100) { clearInterval(timer); btn.textContent = '▶'; playing = false; prog = 0; setTimeout(() => fill.style.width = '0', 800); }
+      }, 100);
+    }
+  }
+  function toggleScript() {
+    const box = document.getElementById('scriptBox');
+    box.classList.toggle('open');
+    event.target.textContent = box.classList.contains('open') ? 'Hide ↑' : 'Read it instead ↓';
+  }
+</script>
+</body>
+</html>
